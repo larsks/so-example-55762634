@@ -1,0 +1,59 @@
+---
+- hosts: localhost
+  vars:
+    node_version: 8.11.3
+    nvm_version: 0.33.11
+
+  tasks:
+
+    - name: install wget
+      yum:
+        name: wget
+        state: latest
+
+    - name: download nvm
+      get_url:
+        url: https://raw.githubusercontent.com/creationix/nvm/v{{ nvm_version }}/install.sh
+        dest: /opt/nvm-install.sh
+
+    - name: Changing perm of "/opt/nvm-install.sh", adding "+x"
+      file:
+        dest: /opt/nvm-install.sh
+        mode: "a+x"
+
+    - name: Execute the script
+      command: /opt/nvm-install.sh
+      args:
+        creates: ~/.nvm/nvm.sh
+
+    - name: Changing perm of "~/.nvm/nvm.sh", adding "+x"
+      file:
+        dest: ~/.nvm/nvm.sh
+        mode: "a+x"
+
+    - name: install node
+      shell: |
+        . ~/.nvm/nvm.sh
+        nvm install {{ node_version }}
+      args:
+        creates: "~/.nvm/versions/node/v{{ node_version }}"
+
+    - name: install jsreport-cli
+      shell: |
+        . ~/.nvm/nvm.sh
+        npm install jsreport-cli -g
+      args:
+        creates: "~/.nvm/versions/node/v{{ node_version }}/lib/node_modules/jsreport-cli"
+
+    - name: create jsreportapp directory
+      file:
+        path: ./jsreportapp
+        state: directory
+
+    - name: init jsreportapp directory
+      shell: |
+        . ~/.nvm/nvm.sh
+        jsreport init
+      args:
+        chdir: ./jsreportapp
+        creates: ./package-lock.json
