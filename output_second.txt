@@ -1,0 +1,36 @@
+
+PLAY [localhost] ******************************************************************************
+
+TASK [Gathering Facts] ************************************************************************
+ok: [localhost]
+
+TASK [install wget] ***************************************************************************
+ok: [localhost]
+
+TASK [download nvm] ***************************************************************************
+ok: [localhost]
+
+TASK [Changing perm of "/opt/nvm-install.sh", adding "+x"] ************************************
+ok: [localhost]
+
+TASK [Execute the script] *********************************************************************
+ok: [localhost]
+
+TASK [Changing perm of "~/.nvm/nvm.sh", adding "+x"] ******************************************
+ok: [localhost]
+
+TASK [install node] ***************************************************************************
+ok: [localhost]
+
+TASK [install jsreport-cli] *******************************************************************
+ok: [localhost]
+
+TASK [create jsreportapp directory] ***********************************************************
+ok: [localhost]
+
+TASK [init jsreportapp directory] *************************************************************
+ok: [localhost]
+
+PLAY RECAP ************************************************************************************
+localhost                  : ok=10   changed=0    unreachable=0    failed=0   
+
