@@ -7,6 +7,7 @@
   tasks:
 
     - name: install wget
+      become: true
       yum:
         name: wget
         state: latest
@@ -14,15 +15,15 @@
     - name: download nvm
       get_url:
         url: https://raw.githubusercontent.com/creationix/nvm/v{{ nvm_version }}/install.sh
-        dest: /opt/nvm-install.sh
+        dest: ~/nvm-install.sh
 
     - name: Changing perm of "/opt/nvm-install.sh", adding "+x"
       file:
-        dest: /opt/nvm-install.sh
+        dest: ~/nvm-install.sh
         mode: "a+x"
 
     - name: Execute the script
-      command: /opt/nvm-install.sh
+      command: ~/nvm-install.sh
       args:
         creates: ~/.nvm/nvm.sh
 
